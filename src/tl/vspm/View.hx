@@ -10,25 +10,13 @@
 package tl.vspm;
 
 import flash.display.Sprite;
-import com.greensock.TimelineMax;
-import com.greensock.TweenMax;
-import com.greensock.easing.Linear;
+import motion.Actuate;
 
-//import caurina.transitions.Tweener;
-/*
- * Important: 
- * Greensock library is NOT a part of this framework.
- * It is used here only to represent base hide/show animation of the view.
- * It can be easily replaced by Tweener (just comment/uncomment proper lines in this file) or any other animation library.
- */
+
 class View extends Sprite implements IViewSection {
 	public var content(get, never):ContentView;
-
-	
 	public var description:DescriptionView;
-	
 	private var isHideShow:Int;
-	public var tMaxHideShow:TimelineMax;
 	
 	public function new(description:DescriptionView) {
 		super();
@@ -69,20 +57,9 @@ class View extends Sprite implements IViewSection {
 		}
 	}
 	
-	private function hideShow(isHideShow:Int):Void
-	//Tweener.addTween(this, {alpha: isHideShow, time: 0.3, transition: "linear", onComplete: [this.hideComplete, this.startAfterShow][isHideShow]}); {
-		
-		if (this.tMaxHideShow) {
-			this.hideShowTimelineMax(isHideShow);
-		}
-		else {
-			TweenMax.killTweensOf(this);
-			TweenMax.to(this, 0.3, {
-						alpha: isHideShow,
-						ease: Linear.easeNone,
-						onComplete: [this.hideComplete, this.startAfterShow][isHideShow]
-					});
-		}
+	private function hideShow(isHideShow:Int):Void {
+		Actuate.stop(this);
+		Actuate.tween(this, 0.3, {alpha: isHideShow}).ease(Linear.easeNone).onComplete([this.hideComplete, this.startAfterShow][isHideShow]);
 	}
 	
 	public function show():Void {
@@ -108,13 +85,8 @@ class View extends Sprite implements IViewSection {
 		this.destroy();
 	}
 	
-	private function destroy():Void
-	//override it to remove elements {
-		
-		if (this.tMaxHideShow) {
-			this.tMaxHideShow.kill();
-			this.tMaxHideShow = null;
-		}
+	private function destroy():Void {
+		//override it to delete elements
 	}
 }
 

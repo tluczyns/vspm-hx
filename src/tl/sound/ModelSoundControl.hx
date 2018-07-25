@@ -3,7 +3,7 @@ package tl.sound;
 import flash.events.EventDispatcher;
 import tl.so.SharedObjectInstance;
 import tl.vspm.EventModel;
-import caurina.transitions.Tweener;
+import motion.Actuate;
 
 class ModelSoundControl extends EventDispatcher {
 	public var levelVolume(get, set):Float;
@@ -17,14 +17,14 @@ class ModelSoundControl extends EventDispatcher {
 	
 	private var name:String;
 	private var so:SharedObjectInstance;
-	private var stepChangeLevelVolume:Float;
+	private var maxTimeChangeLevelVolume:Float;
 	private var origLevelVolume:Float;
 	
-	public function new(name:String, so:SharedObjectInstance = null, stepChangeLevelVolume:Float = 0.05, startLevelVolume:Float = 1) {
+	public function new(name:String, so:SharedObjectInstance = null, maxTimeChangeLevelVolume:Float = 1, startLevelVolume:Float = 1) {
 		super();
 		this.name = name;
 		this.so = so;
-		this.stepChangeLevelVolume = stepChangeLevelVolume;
+		this.maxTimeChangeLevelVolume = maxTimeChangeLevelVolume;
 		var levelVolume:Float = (so != null) ? so.getPropValue("levelVolume", 1):startLevelVolume;
 		this.origLevelVolume = levelVolume;
 		this.levelVolume = levelVolume;
@@ -76,17 +76,11 @@ class ModelSoundControl extends EventDispatcher {
 		}
 	}
 	
-	private function onTweenLevelVolumeChanged(e:EventModel):Void
+	private function onTweenLevelVolumeChanged(e:EventModel):Void {
 	//if (this.origLevelVolume != this.tweenLevelVolume) this.origLevelVolume = Math.max(0.5, this.levelVolume); {
-		
-		var numFramesChangeLevelVolume:Float = Math.round(Math.abs(this.levelVolume - this.tweenLevelVolume) / this.stepChangeLevelVolume);
-		Tweener.removeTweens(this, "levelVolume");
-		Tweener.addTween(this, {
-					levelVolume: this.tweenLevelVolume,
-					time: numFramesChangeLevelVolume,
-					useFrames: true,
-					transition: "linear"
-				});
+		var timeChangeLevelVolume:Float = Math.round(Math.abs(this.levelVolume - this.tweenLevelVolume) * this.maxTimeChangeLevelVolume);
+		Actuate.stop(this, "levelVolume");
+		Actuate.tween(this, timeChangeLevelVolume, {levelVolume: this.tweenLevelVolume}).ease(Linear.easeNone);
 		if (this.so) {
 			this.so.setPropValue("levelVolume" + this.name, Std.string(this.tweenLevelVolume));
 		}

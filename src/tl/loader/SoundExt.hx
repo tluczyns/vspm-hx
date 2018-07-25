@@ -1,5 +1,5 @@
 package tl.loader;
-
+import motion.Actuate;
 import haxe.Constraints.Function;
 import flash.media.Sound;
 import flash.media.SoundChannel;
@@ -11,7 +11,7 @@ import flash.events.IOErrorEvent;
 import flash.net.URLRequest;
 import flash.media.SoundTransform;
 import tl.sound.EventSoundControl;
-import caurina.transitions.Tweener;
+
 import flash.errors.IOError;
 
 class SoundExt extends Sound {
@@ -150,7 +150,7 @@ class SoundExt extends Sound {
 		}
 	}
 	
-	public function setSoundOffOnFade(isSoundOffOn:Float, stepChangeVolume:Float = 0.1, onComplete:Function = null, onCompleteParams:Array<Dynamic> = null):Void {
+	public function setSoundOffOnFade(isSoundOffOn:Float, totalTimeChangeVolume:Float = 1, onComplete:Function = null, onCompleteParams:Array<Dynamic> = null):Void {
 		var destVolume:Float;
 		if (isSoundOffOn == 0) {
 			this.origVolume = this.initVolume;
@@ -159,24 +159,16 @@ class SoundExt extends Sound {
 		else if (isSoundOffOn == 1) {
 			destVolume = this.origVolume;
 		}
-		this.tweenVolume(destVolume, stepChangeVolume, onComplete, onCompleteParams);
+		this.tweenVolume(destVolume, totalTimeChangeVolume, onComplete, onCompleteParams);
 	}
 	
-	public function tweenVolume(destVolume:Float, stepChangeVolume:Float = 0.1, onComplete:Function = null, onCompleteParams:Array<Dynamic> = null, ease:Dynamic = null):Int {
+	private function tweenVolume(destVolume:Float, totalTimeChangeVolume:Float = 1, onComplete:Function = null, onCompleteParams:Array<Dynamic> = null, ease:Dynamic = null):Void {
 		var currVolume:Float = (((this.channel) && (this.channel.soundTransform))) ? this.channel.soundTransform.volume:this.initVolume;
-		var numFramesChangeVolume:Int = Math.abs(Math.round(Math.abs(destVolume - currVolume) / stepChangeVolume));
+		var timeChangeVolume:Float = Math.abs(Math.round(Math.abs(destVolume - currVolume) * totalTimeChangeVolume));
 		ease = ease || "linear";
-		Tweener.removeTweens(this);
-		Tweener.addTween(this, {
-					initVolume: destVolume,
-					time: numFramesChangeVolume,
-					useFrames: true,
-					transition: ease,
-					onUpdate: this.setVolumeSelf,
-					onComplete: onComplete,
-					onCompleteParams: onCompleteParams
-				});
-		return numFramesChangeVolume;
+		Actuate.stop(this);
+		Actuate.tween(this, timeChangeVolume, {initVolume: destVolume}).ease(Linear.easeNone).onUpdate(this.setVolumeSelf).onComplete(onComplete, onCompleteParams);
+		return timeChangeVolume;
 	}
 	
 	//destroy

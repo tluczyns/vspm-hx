@@ -15,7 +15,7 @@ import flash.utils.Dictionary;
 import tl.types.DictionaryExt;
 import tl.types.ObjectUtils;
 
-class DescriptionView extends Dynamic {
+class DescriptionView {
 	
 	public var ind:String;
 	public var classView:Class<Dynamic>;
@@ -37,9 +37,7 @@ class DescriptionView extends Dynamic {
 		this.addToDictInManager();
 	}
 	
-	private function getDictDescriptionViewInManager():Dictionary
-	//DictionaryExt {
-		
+	private function getDictDescriptionViewInManager():Dictionary {	//DictionaryExt {
 		throw new Error("getDictDescriptionViewFromManager must be implemented");
 	}
 	
@@ -72,7 +70,7 @@ class DescriptionView extends Dynamic {
 	public function createView():Void {
 		var containerView:DisplayObjectContainer = this.getContainerView();
 		if ((this.view == null) && (this.classView)) {
-			this.view = new this.ClassView(this);
+			this.view = Type.createInstance(this.classView, [this]);
 			this.view.x = this.x;
 			this.view.y = this.y;
 			containerView.addChild(this.view);

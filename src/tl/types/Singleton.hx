@@ -2,7 +2,7 @@ package tl.types;
 
 import flash.errors.Error;
 
-class Singleton extends Dynamic {
+class Singleton {
 	
 	/*(function():void {
 	trace("static constructor");

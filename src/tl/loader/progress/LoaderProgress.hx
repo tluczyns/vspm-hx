@@ -4,12 +4,11 @@ import flash.display.Sprite;
 import flash.events.Event;
 import flash.text.TextField;
 import flash.events.ProgressEvent;
-import caurina.transitions.Tweener;
+import motion.Actuate;
 import tl.loader.QueueLoadContent;
 
 class LoaderProgress extends Sprite implements ILoaderProgress {
 	private var basePosXTfPercent(get, set):Float;
-
 	
 	private var weightForCurrentElement:Float;
 	private var weightLoaded:Float;
@@ -132,13 +131,8 @@ class LoaderProgress extends Sprite implements ILoaderProgress {
 	
 	public function setLoadProgress(ratioLoaded:Float):Void {
 		this.updateAndCheckIsFinished();
-		Tweener.removeTweens(this);
-		Tweener.addTween(this, {
-					ratioProgress: ratioLoaded,
-					time: this.timeFramesTweenPercent,
-					transition: "easeOutCubic",
-					onUpdate: this.updateAndCheckIsFinished
-				});
+		Actuate.stop(this);
+		Actuate.tween(this, this.timeFramesTweenPercent, {ratioProgress: ratioLoaded}).ease(Cubic.easeOutCubic).onUpdate(this.updateAndCheckIsFinished);
 	}
 	
 	private function updateAndCheckIsFinished():Void {

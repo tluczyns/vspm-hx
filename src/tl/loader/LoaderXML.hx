@@ -25,9 +25,8 @@ class LoaderXML extends EventDispatcher {
 		this.pathXML = pathXML;
 		if (!this.urlLoaderExt) {
 			this.strKeyEncryption = strKeyEncryption;
-			var callback:FunctionCallback = new FunctionCallback(function(isLoaded:Bool, strOrBANode:Dynamic, args:Array<Dynamic> = null):Void
-			//trace("isLoaded:" + isLoaded) {
-				
+			var callback:FunctionCallback = new FunctionCallback(function(isLoaded:Bool, strOrBANode:Dynamic, args:Array<Dynamic> = null):Void {
+				//trace("isLoaded:" + isLoaded) {
 				if (isLoaded) {
 					if (this.strKeyEncryption != "") {
 						var aes:ICipher = Crypto.getCipher("simple-aes-ecb", Hex.toArray(Hex.fromString(this.strKeyEncryption)), Crypto.getPad("pkcs5"));

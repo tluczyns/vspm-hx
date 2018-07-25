@@ -27,9 +27,7 @@ class DescriptionViewSection extends DescriptionView {
 		this.parent = parent;
 	}
 	
-	override private function getDictDescriptionViewInManager():Dictionary
-	//DictionaryExt {
-		
+	override private function getDictDescriptionViewInManager():Dictionary { //DictionaryExt {
 		return ManagerSection.dictDescriptionViewSection;
 	}
 	

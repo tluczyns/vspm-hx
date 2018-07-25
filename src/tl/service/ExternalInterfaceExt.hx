@@ -43,7 +43,7 @@ class ExternalInterfaceExt extends Singleton {
 	}
 	
 	public static function call(nameJSFunction:String, arrParams:Array<Dynamic> = null):Void {
-		if (ExternalInterfaceExt.isBrowser) 
+		if (ExternalInterfaceExt.isBrowser) {
 		//ExternalInterface.call(nameJSFunction, arrParams);{
 			
 			arrParams.unshift(nameJSFunction);

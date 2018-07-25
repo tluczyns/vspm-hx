@@ -44,7 +44,7 @@ class URLLoaderExt extends URLLoader {
 		}
 		request.requestHeaders = arrHeader;
 		if (Std.is(objParams, Array)) {
-			var arrParams:Array<Dynamic> = try cast(objParams, Array</*AS3HX WARNING no type*/>) catch(e:Dynamic) null;
+			var arrParams:Array<Dynamic> = try cast(objParams, Array<Dynamic>) catch(e:Dynamic) null;
 			var objParamsFromArray:Dynamic = { };
 			for (i in 0...arrParams.length) {
 				var param:Array<Dynamic> = Reflect.field(objParams, Std.string(i));
@@ -110,11 +110,10 @@ class URLLoaderExt extends URLLoader {
 	private function onLoadComplete(event:Event):Void {
 		this.destroy();
 		var vars:Dynamic;
-		try 
-		//trace("onLoadComplete:", event.target.data){
-			
+		try {
+			//trace("onLoadComplete:", event.target.data){
 			if (this.dataFormat == URLLoaderDataFormat.TEXT) {
-				vars =Std.string(event.target.data)  //new XML(event.target.data);  ;
+				vars = Std.string(event.target.data);  //new XML(event.target.data);
 			}
 			else if (this.dataFormat == URLLoaderDataFormat.BINARY) {
 				vars = cast((event.target.data), ByteArray);
@@ -133,9 +132,7 @@ class URLLoaderExt extends URLLoader {
 		var percentLoaded:Int = Math.round(ratioLoaded * 100);
 	}
 	
-	private function onLoadError(event:ErrorEvent):Void
-	//IOErrorEvent SecurityErrorEvent {
-		
+	private function onLoadError(event:ErrorEvent):Void { //IOErrorEvent SecurityErrorEvent
 		trace("onLoadError: " + event);
 		this.dispatchEvent(new ProgressEvent(ProgressEvent.PROGRESS, false, false, 0, 1));
 		this.destroy();
@@ -169,11 +166,9 @@ class URLLoaderExt extends URLLoader {
 	
 	//static utils
 	
-	public static function parseXMLToObject(xmlNode:FastXML):Dynamic
-	//trace("xmlNode:", xmlNode) {
-		
-		var obj:Dynamic = {  /*xml: xmlNode*/  
-		};
+	public static function parseXMLToObject(xmlNode:FastXML):Dynamic  {
+		//trace("xmlNode:", xmlNode);
+		var obj:Dynamic = {/*xml: xmlNode*/};
 		var xmlListAttributes:FastXMLList = xmlNode.node.attributes.innerData();  //xmlNode.@ * ;  
 		//trace("xmlListAttributes:", xmlListAttributes)
 		for (i in 0...xmlListAttributes.length()) {
@@ -238,9 +233,8 @@ class URLLoaderExt extends URLLoader {
 		return obj;
 	}
 	
-	public static function sortXML(source:FastXML, elementName:Dynamic, fieldName:Dynamic, options:Dynamic = null):FastXML
-	// list of elements we're going to sort {
-		
+	public static function sortXML(source:FastXML, elementName:Dynamic, fieldName:Dynamic, options:Dynamic = null):FastXML {
+		// list of elements we're going to sort
 		var xmlList:FastXMLList = source.node.elements.innerData(elementName);  //elements().(name() == elementName);  
 		// list of elements not included in the sort -
 		// we place these back into the source node at the end
@@ -248,7 +242,7 @@ class URLLoaderExt extends URLLoader {
 		var xmlListExclude:FastXMLList = source.node.elements.innerData();
 		for (i in 0...xmlListExclude.length()) {
 			if (xmlListExclude.get(i).node.name.innerData() == elementName) {
-				;
+				//; //WARNING
 				i--;
 			}
 		}

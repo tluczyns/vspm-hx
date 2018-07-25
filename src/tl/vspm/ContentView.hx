@@ -11,7 +11,7 @@ package tl.vspm;
 
 import tl.loader.URLLoaderExt;
 
-class ContentView extends Dynamic {
+class ContentView {
 	
 	public function new(xmlContent:FastXML) {
 		super();
