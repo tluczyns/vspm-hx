@@ -5,6 +5,7 @@ import flash.events.Event;
 import flash.text.TextField;
 import flash.events.ProgressEvent;
 import motion.Actuate;
+import motion.easing.Cubic;
 import tl.loader.QueueLoadContent;
 
 class LoaderProgress extends Sprite implements ILoaderProgress {
@@ -82,7 +83,7 @@ class LoaderProgress extends Sprite implements ILoaderProgress {
 	}
 	
 	private function removeTfPercent():Void {
-		if (this.tfPercent) {
+		if (this.tfPercent != null) {
 			this.containerElements.removeChild(this.tfPercent);
 			this.tfPercent = null;
 		}
@@ -132,7 +133,7 @@ class LoaderProgress extends Sprite implements ILoaderProgress {
 	public function setLoadProgress(ratioLoaded:Float):Void {
 		this.updateAndCheckIsFinished();
 		Actuate.stop(this);
-		Actuate.tween(this, this.timeFramesTweenPercent, {ratioProgress: ratioLoaded}).ease(Cubic.easeOutCubic).onUpdate(this.updateAndCheckIsFinished);
+		Actuate.tween(this, this.timeFramesTweenPercent, {ratioProgress: ratioLoaded}).ease(Cubic.easeOut).onUpdate(this.updateAndCheckIsFinished);
 	}
 	
 	private function updateAndCheckIsFinished():Void {
@@ -143,7 +144,7 @@ class LoaderProgress extends Sprite implements ILoaderProgress {
 	}
 	
 	private function update():Void {
-		if (this.tfPercent) {
+		if (this.tfPercent != null) {
 			this.tfPercent.text = Std.string(Math.round(this.ratioProgress * 100)) + "%";
 			this.tfPercent.x = this.basePosXTfPercent - this.tfPercent.width / 2;
 		}
@@ -157,7 +158,7 @@ class LoaderProgress extends Sprite implements ILoaderProgress {
 		}
 		this.removeEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage);
 		this.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemovedFromStage);
-		Tweener.removeTweens(this);
+		Actuate.stop(this);
 		this.removeTfPercent();
 		this.removeContainerElements();
 	}

@@ -12,7 +12,6 @@ package tl.vspm;
 import flash.errors.Error;
 import flash.display.DisplayObjectContainer;
 import flash.utils.Dictionary;
-import tl.types.DictionaryExt;
 import tl.types.ObjectUtils;
 
 class DescriptionView {
@@ -37,12 +36,12 @@ class DescriptionView {
 		this.addToDictInManager();
 	}
 	
-	private function getDictDescriptionViewInManager():Dictionary {	//DictionaryExt {
+	private function getDictDescriptionViewInManager():Dictionary {
 		throw new Error("getDictDescriptionViewFromManager must be implemented");
 	}
 	
 	private function addToDictInManager():Void {
-		var dictDescriptionViewInManager:Dictionary = this.getDictDescriptionViewInManager();  //DictionaryExt  
+		var dictDescriptionViewInManager:Dictionary = this.getDictDescriptionViewInManager();
 		if (dictDescriptionViewInManager[this.ind] != null) {
 			cast((dictDescriptionViewInManager[this.ind]), DescriptionView).addAdditionalContent(this);
 		}

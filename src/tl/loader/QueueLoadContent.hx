@@ -10,7 +10,7 @@ import tl.loader.LoaderExt;
 import tl.loader.SoundExt;
 import tl.utils.FunctionCallback;
 
-class QueueLoadContent extends Dynamic {
+class QueueLoadContent {
 	public var isLoading(get, never):Bool;
 
 	

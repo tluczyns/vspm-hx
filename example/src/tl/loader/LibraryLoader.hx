@@ -4,6 +4,7 @@ import flash.display.Sprite;
 import tl.loader.QueueLoadContent;
 import tl.loader.progress.LoaderProgress;
 import motion.Actuate;
+import motion.easing.Linear;
 import flash.display.DisplayObject;
 
 class LibraryLoader extends Sprite {
@@ -51,7 +52,7 @@ class LibraryLoader extends Sprite {
 	
 	private function onContentLoadCompleteHandler(arrContent:Array<Dynamic>):Void {
 		this.isAllLibrariesLoaded = true;
-		this.arrSwfLib = new Array<Dynamic>(this.arrIndSwfLib.length);
+		this.arrSwfLib = new Array<Dynamic>();
 		for (i in 0...this.arrIndSwfLib.length) {
 			var objSwfLib:Dynamic = arrContent[this.arrIndSwfLib[i]];
 			if (objSwfLib.isLoaded) {
@@ -68,12 +69,7 @@ class LibraryLoader extends Sprite {
 	}
 	
 	private function hideLoaderProgress():Void {
-		Tweener.addTween(this.loaderProgress, {
-					alpha: 0,
-					time: LibraryLoader.TIME_HIDE_SHOW,
-					transition: "linear",
-					onComplete: this.onHideLoaderProgress
-				});
+		Actuate.tween(this.loaderProgress, LibraryLoader.TIME_HIDE_SHOW, {alpha: 0}).ease(Linear.easeNone).onComplete(this.onHideLoaderProgress);
 	}
 	
 	private function removeLoaderProgress():Void {

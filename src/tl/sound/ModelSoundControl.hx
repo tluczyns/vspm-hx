@@ -4,6 +4,7 @@ import flash.events.EventDispatcher;
 import tl.so.SharedObjectInstance;
 import tl.vspm.EventModel;
 import motion.Actuate;
+import motion.easing.Linear;
 
 class ModelSoundControl extends EventDispatcher {
 	public var levelVolume(get, set):Float;
@@ -71,7 +72,7 @@ class ModelSoundControl extends EventDispatcher {
 	}
 	
 	private function onLevelVolumeChanged(e:EventModel):Void {
-		if (this.so) {
+		if (this.so != null) {
 			this.so.setPropValue("levelVolume" + this.name, this.levelVolume);
 		}
 	}
@@ -81,7 +82,7 @@ class ModelSoundControl extends EventDispatcher {
 		var timeChangeLevelVolume:Float = Math.round(Math.abs(this.levelVolume - this.tweenLevelVolume) * this.maxTimeChangeLevelVolume);
 		Actuate.stop(this, "levelVolume");
 		Actuate.tween(this, timeChangeLevelVolume, {levelVolume: this.tweenLevelVolume}).ease(Linear.easeNone);
-		if (this.so) {
+		if (this.so != null) {
 			this.so.setPropValue("levelVolume" + this.name, Std.string(this.tweenLevelVolume));
 		}
 	}

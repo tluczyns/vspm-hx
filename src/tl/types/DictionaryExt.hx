@@ -8,7 +8,6 @@ import flash.utils.Dictionary;
 class DictionaryExt extends Proxy {
 	public var length(get, never):Int;
 
-	
 	private var funcSort:Function;
 	public var dictionary:Dictionary;
 	private var _arrNameProp:Array<Dynamic>;

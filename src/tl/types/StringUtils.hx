@@ -1,7 +1,7 @@
 package tl.types;
 
 
-class StringUtils extends Dynamic {
+class StringUtils {
 	
 	public function new() {
 		super();

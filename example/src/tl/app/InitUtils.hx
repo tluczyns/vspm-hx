@@ -31,7 +31,7 @@ class InitUtils extends Singleton {
 	
 	public static function setupStageAndMask(dspObjContainer:DisplayObjectContainer, scaleMode:String = "noScale"):Void {
 		InitUtils.scaleMode = scaleMode;
-		if (dspObjContainer.stage) {
+		if (dspObjContainer.stage != null) {
 			InitUtils.setupStageAndMaskOnAddedToStage({
 						target: dspObjContainer
 					});

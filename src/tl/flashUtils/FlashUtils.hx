@@ -1,6 +1,7 @@
 package tl.flashUtils;
 
 import haxe.Constraints.Function;
+import openfl.Vector;
 import tl.types.Singleton;
 import flash.utils.*;
 

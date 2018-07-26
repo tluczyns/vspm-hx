@@ -62,13 +62,13 @@ class LoaderXML extends EventDispatcher {
 					this.dispatchEvent(new EventLoaderXML(EventLoaderXML.XML_NOT_LOADED));
 				}
 				this.removeLoaderXML();
-			}, this);
+			});
 			this.urlLoaderExt = new URLLoaderExt({
-						url: pathXML,
-						isGetPost: 0,
-						callback: callback,
-						isTextBinaryVariables: as3hx.Compat.parseInt(this.strKeyEncryption != "")
-					});
+				url: pathXML,
+				isGetPost: 0,
+				callback: callback,
+				isTextBinaryVariables: as3hx.Compat.parseInt(this.strKeyEncryption != "")
+			});
 		}
 	}
 	

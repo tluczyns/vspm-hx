@@ -2,7 +2,7 @@ package tl.so;
 
 import flash.net.SharedObject;
 
-class SharedObjectInstance extends Dynamic {
+class SharedObjectInstance {
 	
 	private var so:SharedObject;
 	

@@ -12,19 +12,16 @@ package tl.vspm;
 import flash.display.DisplayObjectContainer;
 import flash.utils.Dictionary;
 
-//import tl.types.DictionaryExt;
 class DescriptionViewPopup extends DescriptionView {
 	
 	public var objParamsWithValuesToShow:Dynamic;
 	
 	public function new(ind:String, nameClass:Class<Dynamic>, content:ContentViewPopup, objParamsWithValuesToShow:Dynamic, x:Float = 0, y:Float = 0, containerView:DisplayObjectContainer = null) {
-		this.objParamsWithValuesToShow = objParamsWithValuesToShow || { };
+		this.objParamsWithValuesToShow = objParamsWithValuesToShow || {};
 		super(ind, nameClass, content, x, y, containerView);
 	}
 	
-	override private function getDictDescriptionViewInManager():Dictionary
-	//DictionaryExt {
-		
+	override private function getDictDescriptionViewInManager():Dictionary {
 		return ManagerPopup.dictDescriptionViewPopup;
 	}
 	

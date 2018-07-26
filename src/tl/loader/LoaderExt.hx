@@ -15,16 +15,16 @@ import flash.system.SecurityDomain;
 
 class LoaderExt extends Loader {
 	
-	private var onLoadComplete:Function;
-	private var onLoadProgress:Function;
-	private var onLoadError:Function;
+	private var onLoadComplete:Dynamic->Void;
+	private var onLoadProgress:Dynamic->Void;
+	private var onLoadError:Dynamic->Void;
 	
 	public function new(objLoaderExt:Dynamic) {
 		super();
 		var url:String = Std.string(objLoaderExt.url);
-		this.onLoadComplete = objLoaderExt.onLoadComplete || this.onLoadCompleteDefault;
-		this.onLoadProgress = objLoaderExt.onLoadProgress || this.onLoadProgressDefault;
-		this.onLoadError = objLoaderExt.onLoadError || this.onLoadErrorDefault;
+		this.onLoadComplete = (objLoaderExt.onLoadComplete != null) ? objLoaderExt.onLoadComplete : this.onLoadCompleteDefault;
+		this.onLoadProgress = (objLoaderExt.onLoadProgress != null) ? objLoaderExt.onLoadProgress : this.onLoadProgressDefault;
+		this.onLoadError = (objLoaderExt.onLoadError != null) ? objLoaderExt.onLoadError : this.onLoadErrorDefault;
 		var checkPolicyFile:Bool = cast(objLoaderExt.checkPolicyFile, Bool);
 		this.contentLoaderInfo.addEventListener(Event.COMPLETE, this.onLoadComplete);
 		this.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, this.onLoadProgress);

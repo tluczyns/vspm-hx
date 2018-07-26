@@ -2,21 +2,20 @@ package tl.sound;
 
 import haxe.Constraints.Function;
 import flash.utils.Dictionary;
+import openfl.Vector;
 import tl.so.SharedObjectInstance;
 
 class ModelSoundControlGlobal extends ModelSoundControl {
-	public static var levelVolume(get, set):Float;
-	public static var tweenLevelVolume(get, set):Float;
-	public static var isSoundOffOn(get, set):Int;
-
+	public static var levelVolumeGlobal(get, set):Float;
+	public static var tweenLevelVolumeGlobal(get, set):Float;
+	public static var isSoundOffOnGlobal(get, set):Int;
 	
 	private static var _instance:ModelSoundControlGlobal;
 	
 	private var dictModelSoundControl:Dictionary;
 	
 	public function new(vecNameModelSoundControl:Vector<String>, soName:String = "", stepChangeLevelVolume:Float = 0.05) {
-		super();
-		if (!ModelSoundControlGlobal._instance) {
+		if (ModelSoundControlGlobal._instance == null) {
 			this.dictModelSoundControl = new Dictionary();
 			var so:SharedObjectInstance;
 			if (soName != "") {
@@ -53,38 +52,38 @@ class ModelSoundControlGlobal extends ModelSoundControl {
 	
 	//static access to global model
 	
-	private static function get_levelVolume():Float {
+	private static function get_levelVolumeGlobal():Float {
 		return ModelSoundControlGlobal._instance.levelVolume;
 	}
 	
-	private static function set_levelVolume(value:Float):Float {
+	private static function set_levelVolumeGlobal(value:Float):Float {
 		ModelSoundControlGlobal._instance.levelVolume = value;
 		return value;
 	}
 	
-	private static function get_tweenLevelVolume():Float {
+	private static function get_tweenLevelVolumeGlobal():Float {
 		return ModelSoundControlGlobal._instance.tweenLevelVolume;
 	}
 	
-	private static function set_tweenLevelVolume(value:Float):Float {
+	private static function set_tweenLevelVolumeGlobal(value:Float):Float {
 		ModelSoundControlGlobal._instance.tweenLevelVolume = value;
 		return value;
 	}
 	
-	private static function get_isSoundOffOn():Int {
+	private static function get_isSoundOffOnGlobal():Int {
 		return ModelSoundControlGlobal._instance.isSoundOffOn;
 	}
 	
-	private static function set_isSoundOffOn(value:Int):Int {
+	private static function set_isSoundOffOnGlobal(value:Int):Int {
 		ModelSoundControlGlobal._instance.isSoundOffOn = value;
 		return value;
 	}
 	
-	public static function addEventListener(type:String, listener:Function):Void {
+	public static function addEventListenerGlobal(type:String, listener:Function):Void {
 		ModelSoundControlGlobal._instance.addEventListener(type, listener);
 	}
 	
-	public static function removeEventListener(type:String, listener:Function):Void {
+	public static function removeEventListenerGlobal(type:String, listener:Function):Void {
 		ModelSoundControlGlobal._instance.removeEventListener(type, listener);
 	}
 	
@@ -92,7 +91,7 @@ class ModelSoundControlGlobal extends ModelSoundControl {
 	
 	public static function getModel(name:String = ""):ModelSoundControl {
 		var model:ModelSoundControl;
-		if (!ModelSoundControlGlobal._instance) {
+		if (ModelSoundControlGlobal._instance == null) {
 			new ModelSoundControlGlobal(new Vector<String>());
 		}
 		if (name == "") {

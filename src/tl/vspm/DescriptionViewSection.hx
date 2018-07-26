@@ -12,7 +12,6 @@ package tl.vspm;
 import flash.display.DisplayObjectContainer;
 import flash.utils.Dictionary;
 
-//import tl.types.DictionaryExt;
 class DescriptionViewSection extends DescriptionView {
 	
 	public var indBase:String;
@@ -27,7 +26,7 @@ class DescriptionViewSection extends DescriptionView {
 		this.parent = parent;
 	}
 	
-	override private function getDictDescriptionViewInManager():Dictionary { //DictionaryExt {
+	override private function getDictDescriptionViewInManager():Dictionary {
 		return ManagerSection.dictDescriptionViewSection;
 	}
 	
